@@ -1,9 +1,12 @@
 FROM centos:7
 
-RUN groupadd -g 101 nginx && adduser -u 101 -d /var/cache/nginx -s /sbin/nologin -g nginx nginx
+RUN groupadd -g 101 nginx \
+    && adduser -u 101 -d /var/cache/nginx -s /sbin/nologin -g nginx nginx
 COPY ./nginx.conf /opt/nginx.conf
 COPY ./headers-more-nginx-module.zip /opt/headers-more-nginx-module.zip
+
 WORKDIR /opt
+
 RUN cd /opt/ \
     && yum -y install pcre pcre-devel zlib zlib-devel openssl openssl-devel patch gcc glibc-devel make gd-devel geoip-devel perl-devel wget unzip \
     && wget http://nginx.org/download/nginx-1.18.0.tar.gz \
